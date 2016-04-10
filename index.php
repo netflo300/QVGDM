@@ -6,6 +6,9 @@ if(!isset($_SESSION['login_user'])) {
 	die;
 }
 
+require_once ("class/db.class.php");
+
+$db = new Db();
 ?>
 
 <!DOCTYPE html>
@@ -16,26 +19,27 @@ if(!isset($_SESSION['login_user'])) {
 <title>Insert title here</title>
 <script type="text/javascript" src="script/ajax.js"></script>
 <script type="text/javascript">
-	function selectionnerReponse(lettre) {
+	function selectionnerReponse(lettre, question) {
 		listeOfLetter = document.getElementsByClassName("lettre");
 		listeOfLetter[0].style.backgroundColor = 'white';
 		listeOfLetter[1].style.backgroundColor = 'white';
 		listeOfLetter[2].style.backgroundColor = 'white';
 		listeOfLetter[3].style.backgroundColor = 'white';
 		document.getElementById('lettre_'+lettre).style.backgroundColor = 'orange';
-		envoyerReponse(lettre);
+		envoyerReponse(lettre, question);
 	}
 
-	function envoyerReponse(lettre) {
-		ajax('reponse.php', 'lettre='+lettre, '');
+	function envoyerReponse(lettre, question) {
+		ajax('reponse.php', 'lettre='+lettre+'&question='+question, 'null');
 	}
 
 	 
 	
 	function refreshGame() {
 		//document.getElementById('count').innerHTML=count++;
-		//ajax('reponse.php', '', 'game');
-		//actualisation = setTimeout("refreshGame();", 1000);
+		ajax('aj_question.php', '', 'game');
+		
+		setTimeout("refreshGame();", 3000);
 	}
 	
 	
@@ -43,18 +47,10 @@ if(!isset($_SESSION['login_user'])) {
 </script>
 </head>
 <body>
-<h1>Partie : <?php echo $_SESSION['login_user']; ?></h1>
+<div id="null"></div>
+<h1>Joueur : <?php echo $_SESSION['login_user']; ?></h1>
 <div id="game">
-	<table>
-		<tr>
-			<td class="lettre" id ="lettre_A" onclick="selectionnerReponse('A');">A</td>
-			<td class="lettre" id ="lettre_B" onclick="selectionnerReponse('B');">B</td>
-		</tr>
-		<tr>
-			<td class="lettre" id ="lettre_C" onclick="selectionnerReponse('C');">C</td>
-			<td class="lettre" id ="lettre_D" onclick="selectionnerReponse('D');">D</td>
-		</tr>
-	</table>
+	
 </div>
 <span id="count"> </span>
 <script type="text/javascript">refreshGame();</script>

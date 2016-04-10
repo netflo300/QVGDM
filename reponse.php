@@ -10,4 +10,5 @@ if(!isset($_SESSION['login_user'])) {
 
 
 $db = new Db();
+$db->query("REPLACE INTO qvgdm_user_answer (login_user, id_question, selected_answer, time) VALUES ('".$_SESSION['login_user']."', '".$_POST['question']."', '".$_POST['lettre']."', NOW());  ");
 

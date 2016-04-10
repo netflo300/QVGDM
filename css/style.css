@@ -18,3 +18,11 @@ table tr td {
 	border : 1px solid black;
 	font-size : 40pt;
 }
+
+.fond_blanc {
+	background-color: white;
+}
+
+.fond_orange {
+	background-color: orange;
+}
